@@ -1,0 +1,26 @@
+---
+import { giscusConfig } from "@/site.config";
+---
+
+{giscusConfig.enabled && giscusConfig.repoId && giscusConfig.categoryId && (
+	<section class="mt-16 border-t border-zinc-200 pt-10 dark:border-zinc-700" aria-label="留言">
+		<h2 class="title mb-6 text-xl">留言</h2>
+		<script
+			is:inline
+			src="https://giscus.app/client.js"
+			data-repo={giscusConfig.repo}
+			data-repo-id={giscusConfig.repoId}
+			data-category={giscusConfig.category}
+			data-category-id={giscusConfig.categoryId}
+			data-mapping={giscusConfig.mapping}
+			data-strict="0"
+			data-reactions-enabled="1"
+			data-emit-metadata="0"
+			data-input-position="bottom"
+			data-theme="preferred_color_scheme"
+			data-lang={giscusConfig.lang}
+			crossorigin="anonymous"
+			async
+		></script>
+	</section>
+)}

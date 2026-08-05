@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import { legacyRedirects, postHref } from "@/utils/paths";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("post");
+	const postRedirects = posts
+		.map((post) => {
+			const legacyPath = post.data.legacyPath;
+			if (!legacyPath) return null;
+			return {
+				params: { legacy: legacyPath.replace(/^\//, "").replace(/\/$/, "") },
+				props: { destination: postHref(post.id) },
+			};
+		})
+		.filter(Boolean);
+	const archiveRedirects = Object.entries(legacyRedirects()).map(([legacyPath, destination]) => ({
+		params: { legacy: legacyPath.replace(/^\//, "").replace(/\/$/, "") },
+		props: { destination },
+	}));
+	return [...postRedirects, ...archiveRedirects];
+}
+
+const { destination } = Astro.props;
+const absoluteDestination = new URL(destination, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="zh-TW">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="refresh" content={`0;url=${destination}`} />
+		<link rel="canonical" href={absoluteDestination} />
+		<title>頁面已搬遷</title>
+		<script is:inline define:vars={{ destination }}>
+			window.location.replace(destination);
+		</script>
+	</head>
+	<body>
+		<p>此頁面已搬遷，請前往 <a href={destination}>{destination}</a>。</p>
+	</body>
+</html>

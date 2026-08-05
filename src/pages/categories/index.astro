@@ -1,0 +1,21 @@
+---
+import { getAllPosts, getUniqueCategoriesWithCount } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
+import { taxonomyHref } from "@/utils/paths";
+
+const categories = getUniqueCategoriesWithCount(await getAllPosts());
+---
+
+<PageLayout meta={{ title: "分類", description: "依分類瀏覽 Andy's Blog 的文章。" }}>
+	<h1 class="title mb-6">分類</h1>
+	<ul class="space-y-4">
+		{categories.map(([category, count]) => (
+			<li class="flex items-center gap-x-2">
+				<a class="cactus-link inline-block" href={taxonomyHref("categories", category)}>
+					{category}
+				</a>
+				<span class="inline-block">- {count} 篇文章</span>
+			</li>
+		))}
+	</ul>
+</PageLayout>
