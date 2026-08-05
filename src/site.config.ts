@@ -42,13 +42,13 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 ];
 
-// Fill repoId and categoryId after enabling Discussions and configuring Giscus.
+// Giscus is enabled for the source repository's Announcements category.
 export const giscusConfig = {
-	enabled: false,
+	enabled: true,
 	repo: "AndyHuang1223/andy-develop-note",
-	repoId: "",
+	repoId: "R_kgDOTu0MLw",
 	category: "Announcements",
-	categoryId: "",
+	categoryId: "DIC_kwDOTu0ML84DCut2",
 	mapping: "pathname",
 	lang: "zh-TW",
 } as const;
